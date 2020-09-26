@@ -22,3 +22,26 @@ var tbody = d3.select("tbody");
         });
     }
 
+    // Building a new function for adding a button and reacting to click
+    function handleClick(){
+        // create a variable to hold date data
+        let date = d3.select("#datetime").property("value");
+        let filteredData = tableData;
+
+        // Checking to see if date was entered
+        if (date) {
+            // filter the data to show data that matches date that was used
+            filteredData = filteredData.filter(row => row.datetime === date);
+        };
+
+        // Rebuild the table using the filtered data
+        // @NOTE: If no date was entered, then filteredData will
+        // just be the original tableData.
+        buildTable(filteredData);
+    }
+  
+    // Attach an event to listen for the click
+    d3.selectAll("#filter-btn").on("click", handleClick);
+
+    // Build the table when the page loads
+    buildTable(tableData);
